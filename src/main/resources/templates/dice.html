@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Home</title>
+</head>
+<body>
+
+<h1>Dice Roll!</h1>
+
+<p th:if="${sameRoll}">Your number:, <p th:text="${number}" />, was the same as the dice roll, <p th:text="${number}" /></p>
+<p th:if="${!sameRoll}">Your number:, <p th:text="${number}" />, was not the same as the dice roll, <p th:text="${number}" /></p>
+
+</body>
+</html>
