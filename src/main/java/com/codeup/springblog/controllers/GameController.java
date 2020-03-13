@@ -12,6 +12,7 @@ public class GameController {
     public String getDice(@PathVariable int number, Model model) {
         int diceRoll = (int) Math.ceil(Math.random() * 6);
         boolean sameRoll = number == diceRoll;
+        System.out.println(sameRoll);
         model.addAttribute("diceRoll", diceRoll);
         model.addAttribute("sameRoll", sameRoll);
         return "dice";
