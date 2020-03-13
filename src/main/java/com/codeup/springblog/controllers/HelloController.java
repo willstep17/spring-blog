@@ -19,4 +19,10 @@ class HelloController {
     public String sayHello(@PathVariable String name) {
         return "Hello " + name + "!";
     }
+
+    @GetMapping("/increment/{number}")
+    @ResponseBody
+    public String increment(@PathVariable int number) {
+        return "The number " + number + " plus 1 is " + (number + 1);
+    }
 }
