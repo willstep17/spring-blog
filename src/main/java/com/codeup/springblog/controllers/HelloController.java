@@ -1,12 +1,10 @@
 package com.codeup.springblog.controllers;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
-class HelloController {
+class HelloController<method> {
 
     @GetMapping("/hello")
     @ResponseBody
@@ -24,5 +22,12 @@ class HelloController {
     @ResponseBody
     public String increment(@PathVariable int number) {
         return "The number " + number + " plus 1 is " + (number + 1);
+    }
+
+    //Another way to map paths
+    @RequestMapping(path = "/decrement/{number}", method = RequestMethod.GET)
+    @ResponseBody
+    public String decrement(@PathVariable int number) {
+        return "The number " + number + " minus 1 is " + (number - 1);
     }
 }
