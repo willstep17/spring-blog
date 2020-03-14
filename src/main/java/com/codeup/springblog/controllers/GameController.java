@@ -15,6 +15,6 @@ public class GameController {
         System.out.println(sameRoll);
         model.addAttribute("diceRoll", diceRoll);
         model.addAttribute("sameRoll", sameRoll);
-        return "dice";
+        return "dice"
     }
 }
