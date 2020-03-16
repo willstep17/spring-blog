@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Dog {
     @Id
     @Column(columnDefinition = "int(11) unsigned NOT NULL AUTO_INCREMENT")
-    private int id;
+    private long id;
 
     @Column(columnDefinition = "tinyint(3) unsigned NOT NULL")
     private byte age;
@@ -21,7 +21,7 @@ public class Dog {
     public Dog() {
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
