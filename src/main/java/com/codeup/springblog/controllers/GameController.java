@@ -8,13 +8,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class GameController {
 
-    @GetMapping("/roll-dice/${number}")
-    public String getDice(@PathVariable int number, Model model) {
+    @GetMapping("/roll-dice/{guess}")
+    public String getDice(@PathVariable int guess, Model model) {
+        String message;
         int diceRoll = (int) Math.ceil(Math.random() * 6);
-        boolean sameRoll = number == diceRoll;
-        System.out.println(sameRoll);
+        if (guess == diceRoll) {
+            message = "You guessed the random number!";
+        } else {
+            message = "Sorry, try again!";
+        }
+        model.addAttribute("message", message);
+        model.addAttribute("guess", guess);
         model.addAttribute("diceRoll", diceRoll);
-        model.addAttribute("sameRoll", sameRoll);
         return "dice";
     }
 }
