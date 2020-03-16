@@ -5,10 +5,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "ads")
 public class Ad {
-
-    public Ad() {
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -18,6 +14,9 @@ public class Ad {
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String description;
+
+    public Ad() {
+    }
 
     public long getId() {
         return id;
