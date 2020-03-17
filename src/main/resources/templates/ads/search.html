@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/header.html :: header"></head>
+<body>
+
+<nav th:replace="partials/navbar.html :: navbar"></nav>
+
+<h1>Ads Search!</h1>
+
+<h2 th:text="${ad.title}"></h2>
+<p th:text="${ad.description}"></p>
+
+</body>
+</html>
