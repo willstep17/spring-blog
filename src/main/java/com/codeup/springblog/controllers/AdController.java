@@ -26,8 +26,7 @@ public class AdController {
 
     @GetMapping("/ads/search/{title}")
     public String searchAd(@PathVariable String title, Model model) {
-        Ad ad = adDao.findByTitle(title);
-        model.addAttribute("ad", ad);
+        model.addAttribute("ad", adDao.findByTitle(title));
         return "ads/search";
     }
 }

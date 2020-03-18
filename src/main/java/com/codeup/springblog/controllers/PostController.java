@@ -1,25 +1,48 @@
 package com.codeup.springblog.controllers;
 
 import com.codeup.springblog.models.Post;
+import com.codeup.springblog.repositories.DogRepo;
+import com.codeup.springblog.repositories.PostRepo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
 @Controller
 public class PostController {
 
+    private PostRepo postDao;
+
+    public PostController(PostRepo postDao) {
+        this.postDao = postDao;
+    }
+
+    @GetMapping("/posts/edit/{id}")
+    public String getPostsEdit(@PathVariable long id, Model model) {
+        model.addAttribute("post", postDao.getOne(id));
+        return "posts/edit";
+    }
+
+    @PostMapping("/posts/update")
+    public String updatePost(@RequestParam long id, @RequestParam String title, @RequestParam String body) {
+        Post post = postDao.findPostById(id);
+        post.setTitle(title);
+        post.setBody(body);
+        postDao.save(post);
+        return "redirect:/posts";
+    }
+
+    @GetMapping("/posts/delete/{id}")
+    public String deletePost(@PathVariable long id, Model model) {
+        model.addAttribute("id", id);
+        postDao.deleteById(id);
+        return "redirect:/posts";
+    }
+
     @GetMapping("/posts")
     public String getPosts(Model model){
-        ArrayList<Post> postList = new ArrayList<>();
-        postList.add(new Post(2, "Second Post", "askdfhkashdfkjahsdf"));
-        postList.add(new Post(3, "Third Post", "some more text..."));
-
-        model.addAttribute("posts", postList);
+        model.addAttribute("posts", postDao.findAll());
         return "posts/index";
     }
 
