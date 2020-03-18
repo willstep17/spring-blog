@@ -1,10 +1,9 @@
 package com.codeup.springblog.models;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
+@Entity(name = "users")
 public class User {
 
     @Id
@@ -19,6 +18,17 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Post> posts;
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
 
     public long getId() {
         return id;
