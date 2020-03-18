@@ -1,8 +1,22 @@
 package com.codeup.springblog.models;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "posts")
 public class Post {
+
+    @Id
+    @Column(columnDefinition = "int(11) unsigned NOT NULL AUTO_INCREMENT")
     public long id;
+
+    @Column(length = 255, nullable = false)
     private String title;
+
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String body;
 
     public Post(long id, String title, String body) {
@@ -11,11 +25,14 @@ public class Post {
         this.body = body;
     }
 
+    public Post() {
+    }
+
     public long getId() {
         return id;
     }
 
-    public void setTitle(long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
