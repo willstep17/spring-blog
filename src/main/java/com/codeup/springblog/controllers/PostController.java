@@ -20,8 +20,7 @@ public class PostController {
     }
 
     @GetMapping("/")
-    public String getLanding(Model model){
-        model.addAttribute("posts", postDao.findAll());
+    public String getLanding(){
         return "posts/landing";
     }
 
@@ -29,19 +28,6 @@ public class PostController {
     public String getPosts(Model model){
         model.addAttribute("posts", postDao.findAll());
         return "posts/index";
-    }
-
-    @GetMapping("/posts/{id}/edit")
-    public String getPostsEdit(@PathVariable long id, Model model) {
-        model.addAttribute("post", postDao.getOne(id));
-        return "posts/edit";
-    }
-
-    @PostMapping("/posts/{id}/edit")
-    public String updatePost(@ModelAttribute Post post) {
-        post.setUser(userDao.getOne(1L));
-        postDao.save(post);
-        return "redirect:/posts";
     }
 
     @GetMapping("/posts/create")
@@ -57,6 +43,21 @@ public class PostController {
         return "redirect:/posts";
     }
 
+    @GetMapping("/posts/{id}/edit")
+    public String getPostsEdit(@PathVariable long id, Model model) {
+        model.addAttribute("post", postDao.getOne(id));
+        return "posts/edit";
+    }
+
+    @PostMapping("/posts/{id}/edit")
+    public String updatePost(@PathVariable long id, @ModelAttribute Post post) {
+        Post p = postDao.getOne(id);
+        p.setTitle(post.getTitle());
+        p.setBody(post.getBody());
+        postDao.save(post);
+        return "redirect:/posts";
+    }
+
     @GetMapping("/posts/delete/{id}")
     public String deletePost(@PathVariable long id, Model model) {
         model.addAttribute("id", id);
@@ -65,12 +66,9 @@ public class PostController {
     }
 
     @GetMapping("/posts/{id}")
-    public String getPost(@PathVariable int id, Model model) {
-        User user = new User();
-        Post post1 = new Post(id, "Europa's First Post", "Remote learning today", user);
-        model.addAttribute("title", post1.getTitle());
-        model.addAttribute("body", post1.getBody());
-        return "posts/show";
+    public String getPost(@PathVariable long id, Model model) {
+        model.addAttribute("posts", postDao.getOne(id));
+        return "posts/index";
     }
 
 }
