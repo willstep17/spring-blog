@@ -7,17 +7,17 @@ import javax.persistence.*;
 public class Post {
 
     @Id
-    @Column(columnDefinition = "int(11) unsigned NOT NULL AUTO_INCREMENT")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long id;
 
-    @Column(length = 255, nullable = false)
+    @Column
     private String title;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(columnDefinition = "TEXT")
     private String body;
 
     @ManyToOne
-    @JoinColumn (name = "user_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     public Post(String title, String body, User user) {

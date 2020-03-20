@@ -9,7 +9,7 @@
     <h1 th:text = "${post.title}"></h1>
     <p th:text = "${post.body}"></p>
     <p>ID: <span th:text = "${post.id}"></span></p>
-    <p>User Email: <span th:text = "${post.getUser().getEmail()}"></span></p>
+    <p>User Email: <span th:text = "${post.user.email}"></span></p>
 </div>
 </body>
 </html>

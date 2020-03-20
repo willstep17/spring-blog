@@ -19,17 +19,40 @@ public class PostController {
         this.userDao = userDao;
     }
 
-    @GetMapping("/posts/edit/{id}")
+    @GetMapping("/")
+    public String getLanding(Model model){
+        model.addAttribute("posts", postDao.findAll());
+        return "posts/landing";
+    }
+
+    @GetMapping("/posts")
+    public String getPosts(Model model){
+        model.addAttribute("posts", postDao.findAll());
+        return "posts/index";
+    }
+
+    @GetMapping("/posts/{id}/edit")
     public String getPostsEdit(@PathVariable long id, Model model) {
         model.addAttribute("post", postDao.getOne(id));
         return "posts/edit";
     }
 
-    @PostMapping("/posts/update")
-    public String updatePost(@RequestParam long id, @RequestParam String title, @RequestParam String body) {
-        Post post = postDao.findPostById(id);
-        post.setTitle(title);
-        post.setBody(body);
+    @PostMapping("/posts/{id}/edit")
+    public String updatePost(@ModelAttribute Post post) {
+        post.setUser(userDao.getOne(1L));
+        postDao.save(post);
+        return "redirect:/posts";
+    }
+
+    @GetMapping("/posts/create")
+    public String getCreatePostForm(Model model) {
+        model.addAttribute("post", new Post());
+        return "posts/create";
+    }
+
+    @PostMapping("/posts/create")
+    public String postNewPost(@ModelAttribute Post post) {
+        post.setUser(userDao.getOne(1L));
         postDao.save(post);
         return "redirect:/posts";
     }
@@ -41,12 +64,6 @@ public class PostController {
         return "redirect:/posts";
     }
 
-    @GetMapping("/posts")
-    public String getPosts(Model model){
-        model.addAttribute("posts", postDao.findAll());
-        return "posts/index";
-    }
-
     @GetMapping("/posts/{id}")
     public String getPost(@PathVariable int id, Model model) {
         User user = new User();
@@ -54,18 +71,6 @@ public class PostController {
         model.addAttribute("title", post1.getTitle());
         model.addAttribute("body", post1.getBody());
         return "posts/show";
-    }
-
-    @GetMapping("/posts/create")
-    public String getCreatePostForm() {
-        return "posts/create";
-    }
-
-    @PostMapping("/posts/create")
-    public String postNewPost(@RequestParam String title, @RequestParam String body) {
-        Post post = new Post(title, body, userDao.findUserById(1L));
-        postDao.save(post);
-        return "redirect:/posts";
     }
 
 }
