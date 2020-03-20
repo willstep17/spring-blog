@@ -4,6 +4,8 @@ import com.codeup.springblog.models.Post;
 import com.codeup.springblog.models.User;
 import com.codeup.springblog.repositories.PostRepo;
 import com.codeup.springblog.repositories.UserRepo;
+import com.codeup.springblog.services.EmailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,18 +16,21 @@ public class PostController {
     private PostRepo postDao;
     private UserRepo userDao;
 
+    @Autowired
+    private EmailService emailService;
+
     public PostController(PostRepo postDao, UserRepo userDao) {
         this.postDao = postDao;
         this.userDao = userDao;
     }
 
     @GetMapping("/")
-    public String getLanding(){
+    public String getLanding() {
         return "posts/landing";
     }
 
     @GetMapping("/posts")
-    public String getPosts(Model model){
+    public String getPosts(Model model) {
         model.addAttribute("posts", postDao.findAll());
         return "posts/index";
     }
@@ -40,6 +45,7 @@ public class PostController {
     public String postNewPost(@ModelAttribute Post post) {
         post.setUser(userDao.getOne(1L));
         postDao.save(post);
+        emailService.prepareAndSend(post, post.getTitle(), post.getBody());
         return "redirect:/posts";
     }
 
