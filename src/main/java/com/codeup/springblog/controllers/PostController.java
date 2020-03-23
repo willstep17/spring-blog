@@ -51,7 +51,6 @@ public class PostController {
     public String postNewPost(@ModelAttribute Post post) {
         post.setUser(userDao.getOne(1L));
         postDao.save(post);
-        emailService.prepareAndSend(post, post.getTitle(), post.getBody());
         return "redirect:/posts";
     }
 
@@ -70,7 +69,7 @@ public class PostController {
         return "redirect:/posts";
     }
 
-    @GetMapping("/posts/{id}/delete")
+    @PostMapping("/posts/{id}/delete")
     public String deletePost(@PathVariable long id, Model model) {
         model.addAttribute("id", id);
         postDao.deleteById(id);
