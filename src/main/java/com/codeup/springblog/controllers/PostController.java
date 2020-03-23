@@ -6,6 +6,7 @@ import com.codeup.springblog.repositories.PostRepo;
 import com.codeup.springblog.repositories.UserRepo;
 import com.codeup.springblog.services.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -49,7 +50,7 @@ public class PostController {
 
     @PostMapping("/posts/create")
     public String postNewPost(@ModelAttribute Post post) {
-        post.setUser(userDao.getOne(1L));
+        post.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         postDao.save(post);
         return "redirect:/posts";
     }
