@@ -35,6 +35,12 @@ public class PostController {
         return "posts/index";
     }
 
+    @GetMapping("/posts/{id}")
+    public String getPost(@PathVariable long id, Model model) {
+        model.addAttribute("posts", postDao.getOne(id));
+        return "posts/index";
+    }
+
     @GetMapping("/posts/create")
     public String getCreatePostForm(Model model) {
         model.addAttribute("post", new Post());
@@ -64,17 +70,11 @@ public class PostController {
         return "redirect:/posts";
     }
 
-    @GetMapping("/posts/delete/{id}")
+    @GetMapping("/posts/{id}/delete")
     public String deletePost(@PathVariable long id, Model model) {
         model.addAttribute("id", id);
         postDao.deleteById(id);
         return "redirect:/posts";
-    }
-
-    @GetMapping("/posts/{id}")
-    public String getPost(@PathVariable long id, Model model) {
-        model.addAttribute("posts", postDao.getOne(id));
-        return "posts/index";
     }
 
 }
