@@ -1,19 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Edit Post</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
+<head th:replace="partials/head :: head('All Posts')"></head>
 <body>
-    <h1>Edit post ID: <span th:text="${post.id}"></span></h1>
-
-    <form th:action="@{|/posts/${post.id}/edit|}" th:method="post" th:object="${post}">
-        <label for="title">Title:</label><br>
-        <input type="text" th:field="*{title}"><br>
-        <label for="body">Body:</label><br>
-        <textarea rows=10 cols=50 th:field="*{body}"></textarea><br>
-        <input type="submit" value="Submit">
-    </form>
+<div class="wrapper">
+    <nav th:replace="partials/navbar :: navbar"></nav>
+    <main class="container">
+        <form th:action="@{|/posts/${post.id}/edit|}" th:method="post" th:object="${post}">
+            <label th:field="*{title}">Title:</label><br>
+            <input type="text" th:field="*{title}"><br>
+            <label th:field="*{body}">Body:</label><br>
+            <textarea rows=10 cols=50 th:field="*{body}"></textarea><br>
+            <input type="submit" value="Submit">
+        </form>
+    </main>
+</div>
 </body>
 </html>
