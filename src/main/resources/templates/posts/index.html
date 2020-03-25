@@ -13,7 +13,6 @@
         <div th:each="post : ${posts}">
             <a th:href="@{|/posts/${post.id}|}"><h1 th:text="${post.title}"></h1></a>
             <p th:text="${post.body}"></p>
-            <p th:text = "${post.user.getEmail()}"></p>
             <br>
             <div sec:authorize="isAuthenticated()">
                 <a th:href="@{|/posts/${post.id}/edit|}"><button>Edit Post</button></a>
